@@ -26,8 +26,8 @@ void init() {
   fill(255);
   textSize(66); 
   text("JAEREN WILLIAM TREDWAY", width/4 - 30, height/2 - 30); 
-  textSize(24);
-  text("WORD", width/4 + 10, height/2 + 10);
+  //textSize(24);
+  //text("WORD", width/4 + 10, height/2 + 10);
   textSize(12); 
   stroke(255);
   text("hold down mouse button to make the magic happen", 875, 540);
@@ -50,14 +50,13 @@ void draw() {
   
   //the trapezoid:
   if (x < 200) {
-    //stroke(20);
     strokeWeight(2+x/150);
     quad(100, 550, 300, 550, 300+x, 580, 100, 580);
   }
  
   strokeWeight(1); //reset lines back to thin
   stroke(255);
-  //vertical stripe:
+  //the vertical stripe:
   line(85, y, 30, y); 
   x += 4;
   y += 2;
@@ -70,6 +69,13 @@ void draw() {
     stroke(255);
   } 
   
+  //add more text later in the game:
+  if (x==1100) {
+    textSize(24);
+    color(255);
+    text("WORD TO THE MAN", width/4 + 10, height/2 + 10);
+  } 
+  
   //after spacebar is pressed:
   if (reset == true) {
     println("reset activated");
@@ -80,7 +86,6 @@ void draw() {
 
 void mousePressed() {
   loop();
-  //redraw();
 }
 
 void mouseReleased() {
