@@ -1,15 +1,15 @@
 import megamu.mesh.*;
 
-//author:         Jaeren Tredway jwtredway@unm.edu
-//library source: http://leebyron.com/mesh/
-//description:    This program does the following:
-//                1. sets up a stage
-//                2. creates a Voronoi object using a 2D array of random points
-//                3. draws the corresponding Voronoi diagram
-//                4. on keyPress(spacebar) takes a picture of the current stage
-//                5. on mousePress() changes color scheme
-//                6. additional key commands: run program and see usage in 
-//                   console.
+//author:      Jaeren Tredway jwtredway@unm.edu
+//library:     http://leebyron.com/mesh/
+//description: This program does the following:
+//             1. sets up a stage
+//             2. creates a Voronoi object using a 2D array of random points
+//             3. draws the corresponding Voronoi diagram
+//             4. on keyPress(spacebar) takes a picture of the current stage
+//             5. on mousePress() changes color scheme
+//             6. additional key commands: run program and see usage in 
+//                console.
 
 
 //variables:
@@ -22,6 +22,7 @@ int green = 0;
 int blue = 0;
 int colorScheme = 1; //the color scheme is changed in mouseClicked()
 Voronoi myVoronoi = makeVoronoi(); 
+boolean whiteCells = false;
 String usage =   "\nINSTRUCTIONS:\n" +
                  "    'u' to show usage\n" +
                  "    line thickness: 'a' to increase, 'z' to decrease\n" +
@@ -32,14 +33,14 @@ String usage =   "\nINSTRUCTIONS:\n" +
                  "    SPACEBAR to capture current stage to a .jpg (saved in this project folder\n";
                  
                                                                                 
-//set the stage:
+//makes the stage:
 void setup() {
   size(1000, 1000);
-  println(usage);
+  println(usage); //prints user instructions in the console
 }
 
 
-//make a Voronoi object that takes as an arg a 2D array of random points: 
+//makes a Voronoi object that takes as an arg a 2D array of random points: 
 Voronoi makeVoronoi () {
   float[][] points = new float[numCells][numCells];
   for (int i = 0; i < numCells; i++) {
@@ -53,18 +54,18 @@ Voronoi makeVoronoi () {
 }
 
 
-//get the cells of the Voronoi object and draw them on the stage:
+//gets the cells of the Voronoi object and draws them on the stage:
 void drawVoronoi() {
   MPolygon[] cells = myVoronoi.getRegions();
   for(int i = 0; i < cells.length; i++) {
-    //float[][] regionCoordinates = cells[i].getCoords();
     fill(random(50, red), random(50, green), random(50, blue));
-    
-    cells[i].draw(this); 
+    if (whiteCells) fill(255);
+    cells[i].draw(this); //draws one cell
   }
 }
 
 
+//runs at frameRate to re-draw the stage over and over:
 void draw() {
   frameRate(flashingRate); //how often draw() is called
   strokeWeight(lineThickness);
@@ -72,7 +73,12 @@ void draw() {
 }
 
 
-//take a picture of the current stage when spacebar pressed:
+//user commands:  takes a picture of the current stage,
+//                changes line thickness,
+//                chnages colour flashing rate,
+//                changes number of cells,
+//                abruptly stops flashing colours,
+//                or prints usage instructions in console:
 void keyPressed() {
   if (key == ' ') {
     println("image captured");
@@ -115,26 +121,33 @@ void keyPressed() {
 }
 
 
-//make a fresh Voronoi Diagram when the mouse is clicked:
+//makes a fresh Voronoi Diagram when the mouse is clicked:
 void mouseClicked() {
-  if (colorScheme == 4) colorScheme = 0;
+  if (colorScheme == 5) colorScheme = 0;
   switch (colorScheme) {
-    case 0:
+    case 0: //grey:
+      whiteCells = false;
       red = 0;
       green = 0;
       blue = 0;
       break;
-    case 1:
+    case 1: //white:
+      whiteCells = true;
+      break;
+    case 2:
+      whiteCells = false;
       red = 255;
       green = 0;
       blue = 0;
       break;
-    case 2:
+    case 3:
+      whiteCells = false;
       red = 0;
       green = 255;
       blue = 0;
       break;
-    case 3:
+    case 4:
+      whiteCells = false;
       red = 0;
       green = 0;
       blue = 255;
