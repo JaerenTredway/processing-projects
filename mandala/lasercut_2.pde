@@ -20,9 +20,9 @@ import processing.pdf.*;
 //finer meshes. Also overall size of the mandala shrinks as angle increases. Use the 
 //keboard controla to increase size as you get higher angles.
 Turtle t;
-int size = 250;
-int angle = 74;
-int lineWidth = 0; 
+int size = 90;
+int angle = 25;
+int lineWidth = 1; 
 
 
 void setup() {
@@ -31,6 +31,7 @@ void setup() {
   background(255);
   t = new Turtle(this); //'this' passes this sketch to the turtle object
   frameRate(500); //default frameRate is 60
+  
   drawMandala();
 }
 
@@ -55,15 +56,18 @@ void polygon(int size, int angle) {
 
 //this draws one poly then turns right and repeats to create a mandala:
 void drawMandala() {
+  beginRecord(PDF, "mandala-angle-"+ angle + ".pdf"); 
   t.setX(width/2);
   t.setY(height/2);
   strokeWeight(lineWidth);
   background(255);
   stroke(150,150,255);
+  
   for (int i = 0; i < 50; i++) {
     polygon(size, angle);
     t.right(10);
   }
+  endRecord();
 }
 
 
