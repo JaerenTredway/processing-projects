@@ -1,2 +1,2 @@
 # processing-projects
-My Processing projects at UNM.
+My Processing 2D projects
